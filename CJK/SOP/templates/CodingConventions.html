@@ -1,0 +1,324 @@
+<html>
+<head>
+<title>SOP</title>
+</head>
+<body>
+<h1>Zephony</h1>
+<h1>Coding Conventions</h1>
+<h2>Python Coding Conventions</h2>
+<h3>Content</h3>
+<ol>
+<li>
+<h3>Source files</h3>
+<ol>
+<li>Should not start with an empty line.</li>
+<li>End with an empty line.</li>
+<li>UTF-8 encoded.</li>
+<li>Can start with docstrings (see next section).</li>
+</ol>
+</li>
+<li>
+<h3>Docstrings</h3>
+<ol>
+<li>Should always contain complete sentences with proper grammar, capitalization and punctuation (full-stops, commas, etc).</li>
+<li>Paragraphs should be separated with an empty line.</li>
+<li> Always use double-quotes. Eg: <span style="color:red;font-weight:bold">"""</span> and not <span style="color:red;font-weight:bold">'''</span></li>
+<li>Leave a single empty line after a docstring except when the dosctring is for the module (file) in which case leave 2 empty lines (PEP8standard).</li>
+</ol>
+</li>
+<li>
+<h3>Continuous lines indentation</h3>
+<ul>
+  <li><b>Valid</b></li>
+<pre>
+# Good looking
+assets = [
+  'Alpha',
+  'Bravo',
+  'Charlie',
+  'Delta',
+]
+
+# or
+assets = [
+  'Alpha', 'Bravo', 'Charlie',
+  'Delta', 'Echo', 'Foxtrot',
+]
+
+name = get_his_name(
+  is_bond=False,
+  is_jason_bourne_or_david_webb='maybe',
+  type_='nickname',
+)
+</pre>
+<li><b>Avoid</b></li>
+<pre>
+assets = ['Alpha, 'Bravo', 'Charlie',
+'Delta', 'Echo', 'Foxtrot'
+]
+name = get_his_name(is_bond=False,
+is_jason_bourne_or_david_webb='maybe',
+type_='nickname')
+</pre>
+</ul>
+</li>
+<li>
+<h3>Empty lines</h3>
+<ul>
+<li>Use them sparingly to group logical or visual snippets of code</li>
+</ul>
+</li>
+<li>
+<h3>Use single quotes for strings as much as possible, except for docstrings.</h3>
+</li>
+<li>
+<h3>The docstrings of functions should define the function's parameters, exceptions being raised and the return value. It should be the first line after the function name. The docstring should always be followed by a single empty line. A docstring generally looks like this:</h3>
+<img src="1.png" alt="Trulli" width="500" height="1000">
+<p>In rare cases where the function can return multiple types, use the following format:</p>
+<pre>
+"""
+This is some docstring blah blah...
+...
+...
+
+:return str/NoneType: (Optional) returns string if name found else None
+"""
+</pre>
+</li>
+<li>
+<h3>A single line of code should not extend to more than 79 characters, in contrast to docstrings, where the max characters on a single line are 72 characters. Tip: Some IDEs and Text editors allow a maximum line width or a marker to assist with it.</h3>
+</li>
+<li>
+<h3>Function, class and variable names should be meaningful i.e the entity should define what it does as much as possible without the help of comments</h3>
+<pre>
+  # Good
+  user_details = []
+  details = []
+  details_user = []
+
+  def convert_to_decimal():
+    """
+    Docstring here
+    """
+
+  def create_user():
+    """
+    Docstring here
+    """
+
+  person.get_height(x)
+  teacher.teach()
+
+  # Bad
+  ud = []
+  d = []
+  du = []
+
+  def c():
+    """
+    Docstring here
+    """
+
+  def convert():
+    """
+    Docstring here
+    """
+
+  def create_u():
+    """
+    Docstring here
+    """
+</pre>
+</li>
+<li>
+<h3>Function names in python should always follow the lower camel case convention.</h3>
+</li>
+<li>
+<h3>Classes should follow the upper camel case convention.</h3>
+</li>
+</ol>
+<h2>REST API Convention</h2>
+<p>We use Postman to create and test REST APIs. When building any application, the API structure is designed and finalized before diving into the code. Examples should be drafted before writing the code. It is, however, possible to change to examples later on, but there should be a base API structure to start with along with the schema of the request and an expected response data. </p>
+<h3>The architect's rules</h3>
+<ol>
+<li>The base route should be /api/v{n} where {n} is an integer representing the version number.
+<pre>
+Eg. <span style="color:red;font-weight:bold">/api/v1/</span>
+</pre>
+</li>
+<li>
+<p>The collection resources should always be in plural</p>
+<pre>Eg: <span style="color:red;font-weight:bold">/api/v1/users</span> [? unless it's a singleton resource?]</pre>
+</li>
+<li>A resource is represented by it's token. A token is an abstract identifier of a resource which can be an integer or a string. For instance, for the API endpoint <span style="color:red;font-weight:bold">/api/v1/users/kevin</span> , <span style="color:red;font-weight:bold">kevin</span> is the username of the user which is the token here. </li>
+<li>There should be no trailing slash in the URLs</li>
+<li>If the URL contains multi-word strings it should be separated by a -</li>
+<li>When it comes to JSON keys, underscores _ are preferred as word separators to hyphens and camelCase conventions, for consistency. </li>
+<li>
+    Use the appropriate HTTP verbs. Mainly we use:
+<pre>
+      <span style="color:red;font-weight:bold">GET</span> - Retrieve resource/collection representation
+      <span style="color:red;font-weight:bold">POST</span> - Create a resource
+      <span style="color:red;font-weight:bold">PATCH</span> - Update a resource (only update the fields present in the request payload)
+      <span style="color:red;font-weight:bold">DELETE</span> - Delete a resource [?soft or hard delete can be mentioned in the query string - usually soft delete is preferred?]
+      <span style="color:red;font-weight:bold">PUT</span> - Replace a resource [less frequently used]
+</pre>
+</li>
+<li>Ensure that the <span style="color:red;font-weight:bold">GET</span> , <span style="color:red;font-weight:bold">POST</span> and <span style="color:red;font-weight:bold">DELETE</span> methods are idempotent. [?Needs to be verified?]</li>
+<li>The API should be unforgiving - it accepts what it expects with a thorough validation in place.</li>
+<li>Accept as little information as possible - related data should be fetched from the database.</li>
+<li>Always finalize the API structure for a project before starting to code (and after DB schema design)</li>
+<li>
+<p>When denoting an <span style="color:red;font-weight:bold">ID</span> field, use the <span style="color:red;font-weight:bold">id</span> on the front, wherever possible.</p>
+<pre>Eg: Use <span style="color:red;font-weight:bold">id_user</span> and <span style="color:red;font-weight:bold">ids_user</span> instead of <span style="color:red;font-weight:bold">user_id</span> and <span style="color:red;font-weight:bold">users_id</span> / <span style="color:red;font-weight:bold">user_ids</span>.</pre>
+</li>
+<li>If there is a sub-resource you wish to create without returning a proper location or identity of the response, you must use the convention <span style="color:red;font-weight:bold">/api/v1/users/-/exports</span> [Use the generic format here and use this as an example]. The <span style="color:red;font-weight:bold">-</span> here between the resource and the sub-resource is a good way to denote that we are not referring to any single user but we are interacting with something that belongs to that collection</li>
+</ol>
+<h3>The developer's rules</h3>
+<ol>
+  <li>Never trust the data you receive by the API - <b>always do proper validation.</b></li>
+  <li>Secure the API via token authorization, as much as possible, so that the API is not there for public use. However other types of authorization exist as well</li>
+</ol>
+<h3>Validation</h3>
+<p>Always validate any data coming from the client properly before acting upon it. We use the <i>Voluptuous</i> library (in Python) to validate JSON data coming from the request body. Voluptuous supports schema validation, however, semantic validation has to be done separately. Schema validation has to be done in the controller (routes or resources file) and semantic validation has to be done inside the model or preferably in the actions layer.</p>
+<h3>Datetime & Date</h3>
+<p>When it comes to datetime, use the format <span style="color:red;font-weight:bold">%Y-%m-%d %H:%M:%S</span> in JSON requests and responses.</p>
+<pre>
+Eg:
+2018-05-09 18:32:21
+</pre>
+<p><b>Note how the milliseconds are dropped.</b>For date, use the format <span style="color:red;font-weight:bold">%Y-%m-%d</span>.</p>
+<pre>
+Eg
+2018-05-09
+</pre>
+<h3>Standard success response format</h3>
+<pre>
+{
+  "status": "success",
+  "http_status": 200,
+  "data": [] or {},
+  "message": "Some user friendly message!" or null,
+}
+</pre>
+<p>The status code can be anything in the 200 series.</p>
+<h3>Standard error response format for schematic errors </h3>
+<pre>
+{
+  "status": "error",
+  "http_status": 422,
+  "errors": [
+        {
+            "field": "data.ids_list"
+            "description": "List id was not found"
+        },
+        {
+            "field": "data.weight"
+            "description": "Abnormal weight deted"
+        }
+    ],
+  "message": "Errors encountered while validating your data" or null,
+}
+</pre>
+<p>The status code can be anything in the 400 series. Nested fields are represented by a single string of the keys in hierarchy separated by . (period).</p>
+<ul>
+<li>The <span style="color:red;font-weight:bold">http_status</span> should always match the response status code of the request. [?Is this necessary?]</li>
+<li>The <span style="color:red;font-weight:bold">data</span> field can either be a list or a dictionary</li>
+<li>The <span style="color:red;font-weight:bold">message</span> field should contain any user-friendly message that is displayed to the user of the application or null in cases where the message is not required or if you expect the client to display an appropriate error message.</li>
+<li>The <span style="color:red;font-weight:bold">errors</span> field should be a list of all the error objects.</li>
+<li>The <span style="color:red;font-weight:bold">field</span> key of an error object contains the key name of the field that faces the error. The full path of the field should be sent with a period ( . ) as the separator.</li>
+<li>The <span style="color:red;font-weight:bold">description</span> key of an error object contains some minor details about what the error is.</li>
+</ul>
+<h3>Standard error response format for bad API Schema</h3>
+<pre>
+  {
+    "status": "error",
+    "http_status": 400,
+    "errors": [
+          {
+              "field": "data.gender"
+              "description": "expected str"
+          },
+          {
+              "field": "data.dimensions.weight"
+              "description": "expected int"
+          }
+      ],
+    "message": "Errors encountered while validating your data.",
+  }
+</pre>
+<h3>List of status codes we use</h3>
+<ul>
+<li>200 - Successful Response</li>
+<li>201 - Whenever a Resource created</li>
+<li>204 - Returned when a resource is deleted (No Content)</li>
+<li>302 - Redirected (When a request was redirected from a target resourceurl)</li>
+<li>400 - Bad Request (Malformed schema)</li>
+<li>401 - Unauthorised (Mostly used in the case of user unauthorization)</li>
+<li>403 - Forbidden (Mostly used in the case of user inauthentication)</li>
+<li>404 - When a requested resource is not found</li>
+<li>405 - Method not allowed</li>
+<li>422 - Schematic error in request data</li>
+<li>500 - A server error occurred</li>
+</ul>
+<h3>Pagination metadata</h3>
+<p>
+When pagination is required for the front end, there's a slight modification in our standard response data. [It's not a modification, but just an extra key]
+</p>
+<p><span style="color:red;font-weight:bold">total_entries</span> : Total number of entries existing in the table it is queried from.</p>
+<p><span style="color:red;font-weight:bold">count</span> : The maximum amount of entries per page.</p>
+<pre>
+  {
+    "status": "success",
+    "http_status": 200,
+    "data": [{},
+      "pagination": {
+        'pages': math.ceil(total_entries / count),
+        'total_entries': total_entries
+      }
+    ]
+    "message": "Some user friendly message" or null,
+  }
+</pre>
+<h3>Postman</h3>
+<p>We use Postman for API testing.</p>
+<p><span style="color:red;font-weight:bold">Rules:</span></p>
+<ol>
+<li>Use <span style="color:red;font-weight:bold">tab</span> (4 spaces) instead of 2 spaces when typing the JSON request body.</li>
+<li>Add detailed API description for each request denoting what each key is and it's requirement (with other information if required). [?Or can it be covered in the Voluptuous schema definition?]</li>
+<li>Organise resources of a collections in folders</li>
+<li>The API requests should generally be in the following order:</li>
+<ol>
+  <li>Get all [resource_name]</li>
+  <li>Get a [resource_name]</li>
+  <li>Create a [resource_name]</li>
+  <li>Update a [resource_name]</li>
+  <li> Delete an [resource_name]</li>
+  <li>Request names should be verbs (Eg: <span style="color:red;font-weight:bold">Get user</span> instead of <span style="color:red;font-weight:bold">user</span> or <span style="color:red;font-weight:bold">user details</span> )</li>
+</ol>
+</ol>
+<h3>Resource</h3>
+<p>The key abstraction of information in REST is a resource. Any information that can be named can be a resource: a document or image, a temporal service, a collection of other resources, a non-virtual object (e.g. a person), and so on. REST uses a resource identifier to identify the particular resource involved in an interaction between components. The state of resource at any particular timestamp is known as resource representation. A representation consists of data, metadata describing the data and hypermedia links which can help the clients in transition to next desired state.</p>
+<a href="https://restfulapi.net/resource-naming/">Source!</a>
+<h3>Resource Naming</h3>
+<p>In addition to utilizing the HTTP verbs appropriately, resource naming is arguably the most debated and most important concept to grasp when creating an understandable, easily leveraged Web service API. When resources are named well, an API is intuitive and easy to use. Done poorly, that same API can feel klutzy and be difficult to use and understand. Below are a few tips to get you going when creating the resource URIs for your new API. Essentially, a RESTful API ends up being simply a collection of URIs, HTTP calls to those URIs and some JSON and/or XML representations of resources, many of which will contain relational links. The RESTful principal of addressability is covered by the URIs. Each resource has its own address or URI—every interesting piece of information the server can provide is exposed as a resource. The constraint of uniform interface is partially addressed by the combination of URIs and HTTP verbs, and using them in line with the standards and conventions.
+</p>
+<p>In deciding what resources are within your system, name them as nouns as opposed to verbs or actions. In other words, a RESTful URI should refer to a resource that is a thing instead of referring to an action. Nouns have properties as verbs do not, just another distinguishing factor.</p>
+<p>Some example resources are:</p>
+<ul>
+<li>Users of the system.</li>
+<li>Courses in which a student is enrolled.</li>
+<li>A user's timeline of posts.</li>
+<li>The users that follow another user.</li>
+<li>An article about horseback riding.</li>
+</ul>
+<p>Each resource in a service suite will have at least one URI identifying it. And it's best when that URI makes sense and adequately describes the resource. URIs should follow a predictable, hierarchical structure to enhance understandability and, therefore, usability: predictable in the sense that they're consistent, hierarchical in the sense that data has structure—relationships. This is not a REST rule or constraint, but it enhances the API.</p>
+<p>RESTful APIs are written for consumers. The name and structure of URIs should convey meaning to those consumers. It's often difficult to know what the data boundaries should be, but with understanding of your data, you most likely are equipped to take a stab and what makes sense to return as a representation to your clients. Design for your clients, not for your data</p>
+<a href="https://www.restapitutorial.com/lessons/restfulresourcenaming.html">Source!</a>
+<h3>You can refer to these (informative) resources</h3>
+<ol>
+  <li>A good cheat sheet might also be found here: <a href="https://www.restapitutorial.com/lessons/restfulresourcenaming.html">Cheat Sheet!</a> Although please note that if there are any conflicting points between the cheat sheet and the document here, please follow the rule specified in the latter.</li>
+<li><a href="https://restfulapi.net/richardson-maturity-model/">Richardson-maturity-model!</a></li>
+</ol>
+</body>
+</html>
